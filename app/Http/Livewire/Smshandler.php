@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
-
+use App\Models\Sms;
 use Livewire\Component;
 
 class Smshandler extends Component
@@ -21,7 +21,7 @@ class Smshandler extends Component
                 ['from' => $twilio_number, 'body' => $message] );
     }
 
-    public function storePhoneNumber(Request $request)
+    public function storeMessage(Request $request)
     {
         //run validation on data sent in
         $validatedData = $request->validate([
