@@ -13,4 +13,6 @@ class Sms extends Model
      * @var string
      */
     protected $primaryKey = 'id';
+    protected $fillable = ['phone_number', 'status','details'];
+    
 }

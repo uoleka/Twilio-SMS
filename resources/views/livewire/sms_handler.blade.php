@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent="submit">
+    <form wire:submit.prevent="storeMessage">
         <input type="text" wire:model="phone_number">
         @error('phone_number') <span class="error">{{ $message }}</span> @enderror
 

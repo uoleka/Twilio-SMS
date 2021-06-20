@@ -8,7 +8,28 @@ use Twilio\Rest\Client;
 
 class Smshandler extends Component
 {
-    /**
+    
+    public $phone_number;
+    public $details;
+    protected $rules = [
+        'phone_number' => 'required|numeric|min:6',
+        'details' => 'required|max:140',
+    ];
+    public function storeMessage(Request $request)
+    {
+        //run validation on data sent in
+        $this->validate();
+        Sms::create([
+            'phone_number' => $this->phone_number,
+            'details' => $this->details,
+            'status' => 'Queued',
+        ]);
+        
+        $this->sendMessage($request->details, $request->phone_number);
+        return back()->with(['success' => "Message Sent"]);
+    }
+
+     /**
      * Sends sms to user using Twilio's programmable sms client
      * @param String $message Body of sms
      * @param Number $recipients string or array of phone number of recepient
@@ -21,19 +42,6 @@ class Smshandler extends Component
         $client = new Client($account_sid, $auth_token);
         $client->messages->create($recipients, 
                 ['from' => $twilio_number, 'body' => $message] );
-    }
-
-    public function storeMessage(Request $request)
-    {
-        //run validation on data sent in
-        $validatedData = $request->validate([
-            'phone_number' => 'required|numeric',
-            'details'      => 'required|max:140'
-        ]);
-        $sms_model = new Sms($request->all());
-        $sms_model->save();
-        $this->sendMessage($request->details, $request->phone_number);
-        return back()->with(['success' => "Message Sent"]);
     }
 
     public function render()
