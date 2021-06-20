@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Smshandler;
+use App\Http\Livewire\Smsshow;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::get('/', function () {
 
 
 Route::get('/sms', Smshandler::class);
+Route::get('/sms_show', Smsshow::class);

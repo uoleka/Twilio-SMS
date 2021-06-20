@@ -3,12 +3,18 @@
 namespace App\Http\Livewire;
 use App\Models\Sms;
 use Livewire\Component;
+use Livewire\WithPagination;
 
-class SmsShow extends Component
+class Smsshow extends Component
 {
+    use WithPagination;
+
+    public $sortBy = '';
+    public $sortDirection = 'desc';
+
     public function render()
     {
-        $sms_details = Sms::all(); //query db with model
-        return view('livewire.sms-show',compact("sms_details"));
+        // query db with model
+        return view('livewire.sms_show', ['smss' => Sms::latest()->paginate(10)]);
     }
 }

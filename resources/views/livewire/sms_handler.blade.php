@@ -6,6 +6,6 @@
         <input type="text" wire:model="details">
         @error('details') <span class="error">{{ $message }}</span> @enderror
 
-        <button type="submit">Save Contact</button>
+        <button type="submit">Send Message</button>
     </form>
 </div>
