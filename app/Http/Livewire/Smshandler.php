@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 use App\Models\Sms;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use App\Jobs\SendTwilioMessage;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 
 class Smshandler extends Component
@@ -27,29 +28,15 @@ class Smshandler extends Component
         }
         //run validation on data sent in
         $this->validate();
-        Sms::create([
+        $sms = Sms::create([
             'phone_number' => $this->phone_number,
             'details' => $this->details,
             'status' => 'Queued',
         ]);
-        
-        $this->sendMessage($request->details, $request->phone_number);
-        return back()->with(['success' => "Message Sent"]);
-    }
 
-     /**
-     * Sends sms to user using Twilio's programmable sms client
-     * @param String $message Body of sms
-     * @param Number $recipients string or array of phone number of recepient
-     */
-    private function sendMessage($message, $recipients)
-    {
-        $account_sid = getenv("TWILIO_SID");
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_number = getenv("TWILIO_NUMBER");
-        $client = new Client($account_sid, $auth_token);
-        $client->messages->create($recipients, 
-                ['from' => $twilio_number, 'body' => $message] );
+        SendTwilioMessage::dispatch($sms);
+        
+        return back()->with(['success' => "Message Sent"]);
     }
 
     public function render()
