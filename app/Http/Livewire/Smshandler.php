@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 use App\Models\Sms;
 use Livewire\Component;
+use Illuminate\Http\Request;
+use Twilio\Rest\Client;
 
 class Smshandler extends Component
 {
@@ -26,7 +28,7 @@ class Smshandler extends Component
         //run validation on data sent in
         $validatedData = $request->validate([
             'phone_number' => 'required|numeric',
-            'details'      => 'required'
+            'details'      => 'required|max:140'
         ]);
         $sms_model = new Sms($request->all());
         $sms_model->save();

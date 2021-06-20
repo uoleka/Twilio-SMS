@@ -8,7 +8,7 @@ class SmsShow extends Component
 {
     public function render()
     {
-        $messages = Sms::all(); //query db with model
-        return view('livewire.sms-show',compact("messages"));
+        $sms_details = Sms::all(); //query db with model
+        return view('livewire.sms-show',compact("sms_details"));
     }
 }
