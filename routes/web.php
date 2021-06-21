@@ -20,5 +20,11 @@ Route::get('/', function () {
 });
 
 
-Route::get('/sms', Smshandler::class);
-Route::get('/sms_show', Smsshow::class);
+Route::group(['prefix' => '/', 'middleware' => ['auth:sanctum', 'verified']], function() {
+    Route::get('sms', Smshandler::class);
+    Route::get('sms_show', Smsshow::class);
+
+    Route::get('dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
