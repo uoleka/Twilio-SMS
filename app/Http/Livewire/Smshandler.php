@@ -33,10 +33,9 @@ class Smshandler extends Component
             'details' => $this->details,
             'status' => 'Queued',
         ]);
-
         SendTwilioMessage::dispatch($sms);
-        
-        return back()->with(['success' => "Message Sent"]);
+        session()->flash('message', 'Message sent.');
+        return back();
     }
 
     public function render()
