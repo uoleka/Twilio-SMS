@@ -21,8 +21,8 @@ Route::get('/', function () {
 
 
 Route::group(['prefix' => '/', 'middleware' => ['auth:sanctum', 'verified']], function() {
-    Route::get('sms', Smshandler::class);
-    Route::get('sms_show', Smsshow::class);
+    Route::get('sms', Smshandler::class)->name('message');
+    Route::get('sms_show', Smsshow::class)->name('status');
 
     Route::get('dashboard', function () {
         return view('dashboard');
