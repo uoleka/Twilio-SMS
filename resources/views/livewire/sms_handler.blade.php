@@ -14,7 +14,8 @@
         <div >
             <label for="message">Message</label>
             <textarea  rows=6 wire:model="details" class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10">
-            @error('details') <span class="error">{{ $message }}</span> @enderror </textarea>
+            </textarea>
+            @error('details') <span class="error">{{ $message }}</span> @enderror 
         </div>
         <br>
         <div >
